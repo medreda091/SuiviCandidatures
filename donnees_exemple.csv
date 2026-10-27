@@ -1,0 +1,7 @@
+entreprise,poste,canal,date_envoi,statut,date_reponse,notes
+Entreprise Exemple A,Data Analyst,LinkedIn,2026-10-01,entretien,2026-10-08,Entretien RH prévu
+Entreprise Exemple B,Business Analyst,site emploi,2026-10-02,refusee,2026-10-15,
+Entreprise Exemple C,Chargé de projet digital,email recruteur,2026-10-03,envoyee,,
+Entreprise Exemple D,Analyste BI,LinkedIn,2026-10-05,en_attente,,
+Entreprise Exemple E,Product Owner junior,site emploi,2026-10-06,entretien,2026-10-14,Second entretien
+Entreprise Exemple F,Consultant fonctionnel,email recruteur,2026-10-08,envoyee,,

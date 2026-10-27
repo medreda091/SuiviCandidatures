@@ -22,6 +22,7 @@ from .base import (
     lister,
     noter_relance,
 )
+from .import_csv import importer
 from .rapport import generer_rapport
 from .statistiques import a_relancer_bientot, calculer, relances_en_retard
 
@@ -101,6 +102,17 @@ def _cmd_relances(args):
               f" (envoyée le {ligne['date_envoi']}, jamais relancée)")
 
 
+def _cmd_importer(args):
+    connexion = _connexion(args)
+    nombre, erreurs = importer(connexion, args.fichier)
+    connexion.close()
+    print(f"{nombre} candidature(s) importée(s) depuis {args.fichier}.")
+    if erreurs:
+        print("Lignes ignorées (à corriger dans le fichier) :")
+        for erreur in erreurs:
+            print(f"  - {erreur}")
+
+
 def _cmd_rapport(args):
     connexion = _connexion(args)
     chemin = generer_rapport(connexion, args.sortie)
@@ -147,6 +159,10 @@ def construire_parser():
 
     p = sous.add_parser("relances", help="voir les relances à faire")
     p.set_defaults(fonction=_cmd_relances)
+
+    p = sous.add_parser("importer", help="importer un fichier CSV (avec rapport qualité)")
+    p.add_argument("fichier")
+    p.set_defaults(fonction=_cmd_importer)
 
     p = sous.add_parser("rapport", help="générer le rapport HTML avec graphiques")
     p.add_argument("--sortie", default="rapport.html")
