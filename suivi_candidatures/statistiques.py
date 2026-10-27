@@ -76,7 +76,9 @@ def relances_en_retard(connexion, aujourd_hui=None):
     aujourd_hui = aujourd_hui or date.today().isoformat()
     en_retard = []
     for candidature in lister(connexion):
-        if candidature["statut"] in ("refusee", "acceptee"):
+        # Seules les candidatures en attente se relancent : un dossier
+        # en entretien, refusé ou accepté n'a plus rien à relancer.
+        if candidature["statut"] not in ("envoyee", "en_attente"):
             continue
         relance = candidature["relance_le"]
         if relance and relance < aujourd_hui:
@@ -94,7 +96,7 @@ def a_relancer_bientot(connexion, aujourd_hui=None, jours=7):
     aujourd_hui = date.fromisoformat(aujourd_hui or date.today().isoformat())
     oublis = []
     for candidature in lister(connexion):
-        if candidature["statut"] in ("refusee", "acceptee"):
+        if candidature["statut"] not in ("envoyee", "en_attente"):
             continue
         if candidature["relance_le"]:
             continue
